@@ -1,0 +1,26 @@
+# Build artifacts
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Maven wrapper
+.mvn/
+
+# Documentation
+README.md
+*.md
+
+# CI/CD
+.github/
+
+# OS
+.DS_Store
+Thumbs.db
