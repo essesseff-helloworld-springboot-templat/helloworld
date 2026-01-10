@@ -1,6 +1,6 @@
 # helloworld Application (Spring Boot)
 
-Java Spring Boot implementation with trunk-based development and event-driven deployments via essesseff platform.
+Java Spring Boot implementation with trunk-based development and GitOps-driven deployments via Argo CD to Kubernetes (see related repositories), with optional process orchestration, reporting, etc. via the essesseff DevOps platform.
 
 *Please Note:*
 
@@ -31,9 +31,11 @@ git commit -am "Add feature"
 git push origin feature/my-feature
 
 # 4. After review, merge to main
-# This triggers automatic build and deploy to DEV
+# This triggers automatic build
 
-# 5. Use essesseff UI for promotions:
+# 5. *If an essesseff subscriber*, upon successful build completion, Helm config-dev Chart.yaml and values.yaml will be automatically updated with the newly built image tag, triggering Argo CD DEV (see argocd-dev repo) to trigger automated deployment to DEV Kubernetes.
+
+# 6. Use essesseff UI for promotions:
 #    - Developer declares Release Candidate
 #    - QA accepts RC → deploys to QA (or alternatively rejects the promotion of the RC to QA)
 #    - QA marks as Stable (or alternatively rejects the promotion to Stable)
@@ -162,10 +164,10 @@ docker run -p 9090:9090 -e PORT=9090 helloworld:local
 ## Related Repositories
 
 * Source: helloworld (this repo)
-* Config DEV: helloworld-config-dev
-* Config QA: helloworld-config-qa
-* Config STAGING: helloworld-config-staging
-* Config PROD: helloworld-config-prod
+* Helm Config DEV: helloworld-config-dev
+* Helm Config QA: helloworld-config-qa
+* Helm Config STAGING: helloworld-config-staging
+* Helm Config PROD: helloworld-config-prod
 * Argo CD Config DEV: helloworld-argocd-dev
 * Argo CD Config QA: helloworld-argocd-qa
 * Argo CD Config STAGING: helloworld-argocd-staging
@@ -205,7 +207,7 @@ docker build -t helloworld:latest .
 
 ## Deployment
 
-The application is deployed automatically to DEV environment after changes are merged to `main` branch and automatic code build succeeds. Promotion to QA, STAGING, and PROD environments is managed through the essesseff platform.
+The application is built automatically and ready to deploy to DEV environment after changes are merged to `main` branch and automatic code build succeeds. If an essesseff subscriber, essesseff updates the Helm config-dev Chart.yaml and values.yaml with the newly built image tag, triggering Argo CD DEV (see argocd-dev repo) to deploy the image and DEV config to Kubernetes DEV.  Promotion to QA, STAGING, and PROD environments is managed through the essesseff platform.
 
 ### Container Image Tags
 
