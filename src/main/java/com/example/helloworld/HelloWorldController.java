@@ -4,49 +4,60 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class HelloWorldController {
+    
+    @Value("${app.environment}")
+    private String environment;
+    
+    @Value("${app.version}")
+    private String version;
 
-    @Value("${app.version:unknown}")
-    private String appVersion;
+    private String getHostname() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            return "unknown";
+        }
+    }
 
     @GetMapping("/")
     public ResponseEntity<String> home() {
+        String timestamp = Instant.now().toString();
+        String hostname = getHostname();
+        
         String html = """
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Hello World - Spring Boot</title>
+                <title>Hello World - %s</title>
                 <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        max-width: 800px;
-                        margin: 50px auto;
-                        padding: 20px;
-                    }
-                    .info { background-color: #f0f0f0; padding: 15px; border-radius: 5px; }
-                    h1 { color: #2c3e50; }
+                    body { font-family: Arial, sans-serif; margin: 40px; }
+                    .container { max-width: 600px; margin: 0 auto; }
+                    .info { background: #f0f0f0; padding: 20px; border-radius: 5px; }
+                    h1 { color: #333; }
+                    .env { color: #0066cc; font-weight: bold; }
                 </style>
             </head>
             <body>
-                <h1>Hello World Application (Spring Boot)</h1>
-                <div class="info">
-                    <p><strong>Version:</strong> %s</p>
-                    <p><strong>Framework:</strong> Spring Boot</p>
-                    <p><strong>Language:</strong> Java</p>
+                <div class="container">
+                    <h1>Hello World Spring Boot!</h1>
+                    <div class="info">
+                        <p><strong>Environment:</strong> <span class="env">%s</span></p>
+                        <p><strong>Version:</strong> %s</p>
+                        <p><strong>Timestamp:</strong> %s</p>
+                        <p><strong>Hostname:</strong> %s</p>
+                    </div>
                 </div>
-                <h2>Available Endpoints:</h2>
-                <ul>
-                    <li><a href="/health">/health</a> - Health check endpoint</li>
-                    <li><a href="/ready">/ready</a> - Readiness check endpoint</li>
-                </ul>
             </body>
             </html>
-            """.formatted(appVersion);
+            """.formatted(environment, environment, version, timestamp, hostname);
         
         return ResponseEntity.ok()
                 .header("Content-Type", "text/html")
@@ -57,8 +68,8 @@ public class HelloWorldController {
     public ResponseEntity<Map<String, Object>> health() {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "healthy");
-        response.put("version", appVersion);
-        response.put("framework", "Spring Boot");
+        response.put("environment", environment);
+        response.put("version", version);
         return ResponseEntity.ok(response);
     }
 
@@ -66,8 +77,8 @@ public class HelloWorldController {
     public ResponseEntity<Map<String, Object>> ready() {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "ready");
-        response.put("version", appVersion);
-        response.put("framework", "Spring Boot");
+        response.put("environment", environment);
+        response.put("version", version);
         return ResponseEntity.ok(response);
     }
 }
