@@ -28,7 +28,7 @@ Java Spring Boot implementation with trunk-based development and GitOps-driven d
 
 * **Branch Strategy**: Single `main` branch (trunk-based)
 * **Auto-Build**: GitHub Actions image build runs on code push to `main` branch
-* **Auto-Deploy**: DEV CI/CD deployment subsequent to successful image build
+* **Auto-Deploy**: DEV CI/CD deployment subsequent to successful image build (via essesseff deployment orchestration)
 * **ClickOps Promote/Deploy/Re-Deploy/Rollback**: DEV, QA, STAGING, PROD (via essesseff UX)
 * **GitOps Deploy**: DEV, QA, STAGING, PROD (managed by Argo CD by updating config-env Chart.yaml/values.yaml)
 * **API Promote/Deploy**: DEV, QA, STAGING, PROD (via essesseff public API)
