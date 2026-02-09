@@ -1,22 +1,47 @@
 # helloworld Application (Spring Boot)
 
-Java Spring Boot implementation with trunk-based development and GitOps-driven deployments via Argo CD to Kubernetes (see related repositories), with optional process orchestration, reporting, etc. via the essesseff DevOps platform.
+Java Spring Boot implementation with trunk-based development and GitOps-driven deployments via Argo CD to Kubernetes (see related repositories), with *optional* process orchestration, reporting, etc. via the essesseff DevOps platform available on a per essesseff app subscription.
 
 *Please Note:*
 
 *essesseff™ is an independent DevOps ALM PaaS-as-SaaS and is in no way affiliated with, endorsed by, sponsored by, or otherwise connected to GitHub® or The Linux Foundation®.* 
 
-*essesseff™ is a trademark of essesseff LLC.*
+*essesseff™ and the essesseff™ logo design are trademarks of essesseff LLC.*
 
 *GITHUB®, the GITHUB® logo design and the INVERTOCAT logo design are trademarks of GitHub, Inc., registered in the United States and other countries.*
 
 *Argo®, Helm®, Kubernetes® and K8s® are registered trademarks of The Linux Foundation.*
 
-## Architecture
+## essesseff App GitHub Repository Structure 
+
+* Source: helloworld (this repo)
+* Helm Config DEV: helloworld-config-dev
+* Helm Config QA: helloworld-config-qa
+* Helm Config STAGING: helloworld-config-staging
+* Helm Config PROD: helloworld-config-prod
+* Argo CD Config DEV: helloworld-argocd-dev
+* Argo CD Config QA: helloworld-argocd-qa
+* Argo CD Config STAGING: helloworld-argocd-staging
+* Argo CD Config PROD: helloworld-argocd-prod
+
+## Develop, Build and Deploy 
 
 * **Branch Strategy**: Single `main` branch (trunk-based)
-* **Auto-Deploy**: DEV only
-* **Manual Deploy**: QA, STAGING, PROD (via essesseff)
+* **Auto-Build**: GitHub Actions image build runs on code push to `main` branch
+* **Auto-Deploy**: DEV CI/CD deployment subsequent to successful image build
+* **ClickOps Promote/Deploy/Re-Deploy/Rollback**: DEV, QA, STAGING, PROD (via essesseff UX)
+* **GitOps Deploy**: DEV, QA, STAGING, PROD (managed by Argo CD by updating config-env Chart.yaml/values.yaml)
+* **API Promote/Deploy**: DEV, QA, STAGING, PROD (via essesseff public API)
+
+## Golden Path App Template Architecture Diagram
+
+![Golden Path App Template Diagram](https://www.essesseff.com/images/architecture/essesseff-app-template-minus-subscription-light-mode.svg)
+
+## Onboarding
+
+If an essesseff subscriber, it is highly recommended that you use the [essesseff onboarding utility](https://www.essesseff.com/docs/deployment/essesseff-onboarding-utility) from a shell terminal with kubectl access to your K8s cluster(s) to onboard to essesseff, GitHub, Argo CD and K8s typically in under 5 minutes per essesseff app, or otherwise similarly make use of the [essesseff public API](https://www.essesseff.com/docs/api) for onboarding.  Otherwise, the essesseff UX and shell terminal with kubectl access to your K8s cluster(s), in combination with onboarding scripts in your essesseff app argocd-env repos, may also be used to onboard your essesseff app(s) to essesseff, GitHub, Argo CD and K8s.
+
+If not an essesseff subscriber, you can still freely use all of the repos in this golden path template, edit app name and namespace labels according to your needs (typically via global string replacements in the file names and contents), and then run the onboarding scripts included in each of your argocd-env repos from a shell terminal with kubectl access to you K8s cluster(s) to get fully onboarded to GitHub, Argo CD and K8s in about ~20 minutes.
 
 ## Development Workflow
 
@@ -160,18 +185,6 @@ docker run -p 9090:9090 -e PORT=9090 helloworld:local
 * **Container**: Docker with multi-stage build
 * **Base Image**: Eclipse Temurin 17 JRE Alpine
 * **Package**: com.example.helloworld
-
-## Related Repositories
-
-* Source: helloworld (this repo)
-* Helm Config DEV: helloworld-config-dev
-* Helm Config QA: helloworld-config-qa
-* Helm Config STAGING: helloworld-config-staging
-* Helm Config PROD: helloworld-config-prod
-* Argo CD Config DEV: helloworld-argocd-dev
-* Argo CD Config QA: helloworld-argocd-qa
-* Argo CD Config STAGING: helloworld-argocd-staging
-* Argo CD Config PROD: helloworld-argocd-prod
 
 ## Testing
 
