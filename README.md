@@ -14,15 +14,15 @@ Java Spring Boot implementation with trunk-based development and GitOps-driven d
 
 ## essesseff App GitHub Repository Structure 
 
-* Source: helloworld (this repo)
-* Helm Config DEV: helloworld-config-dev
-* Helm Config QA: helloworld-config-qa
-* Helm Config STAGING: helloworld-config-staging
-* Helm Config PROD: helloworld-config-prod
-* Argo CD Config DEV: helloworld-argocd-dev
-* Argo CD Config QA: helloworld-argocd-qa
-* Argo CD Config STAGING: helloworld-argocd-staging
-* Argo CD Config PROD: helloworld-argocd-prod
+* Source: [helloworld (this repo)](https://github.com/essesseff-helloworld-springboot-templat/helloworld)
+* Helm Config DEV: [helloworld-config-dev](https://github.com/essesseff-helloworld-springboot-templat/helloworld-config-dev)
+* Helm Config QA: [helloworld-config-qa](https://github.com/essesseff-helloworld-springboot-templat/helloworld-config-qa)
+* Helm Config STAGING: [helloworld-config-staging](https://github.com/essesseff-helloworld-springboot-templat/helloworld-config-staging)
+* Helm Config PROD: [helloworld-config-prod](https://github.com/essesseff-helloworld-springboot-templat/helloworld-config-prod)
+* Argo CD Config DEV: [helloworld-argocd-dev](https://github.com/essesseff-helloworld-springboot-templat/helloworld-argocd-dev)
+* Argo CD Config QA: [helloworld-argocd-qa](https://github.com/essesseff-helloworld-springboot-templat/helloworld-argocd-qa)
+* Argo CD Config STAGING: [helloworld-argocd-staging](https://github.com/essesseff-helloworld-springboot-templat/helloworld-argocd-staging)
+* Argo CD Config PROD: [helloworld-argocd-prod](https://github.com/essesseff-helloworld-springboot-templat/helloworld-argocd-prod)
 
 ## Develop, Build and Deploy 
 
@@ -37,11 +37,13 @@ Java Spring Boot implementation with trunk-based development and GitOps-driven d
 
 ![Golden Path App Template Diagram](https://www.essesseff.com/images/architecture/essesseff-app-template-minus-subscription-light-mode.svg)
 
+*Note: GitHub and K8s Licensed and Hosted Separately. This diagram shows an example of three K8s-deployed apps following the build-once-deploy-many "essesseff app" model, each app with its own Source and Helm-config-env GitHub repos (and Argo CD GitHub repos (not shown)), and with deployments distributed across as few or as many K8s clusters as desired, both on an env-specific basis as well as on a one-or-many deployments per environment basis. The essesseff app templates easily support and provide standardized configuration and automation OOTB for all of the above.*
+
 ## Onboarding
 
-If an essesseff subscriber, it is highly recommended that you use the [essesseff onboarding utility](https://www.essesseff.com/docs/deployment/essesseff-onboarding-utility) from a shell terminal with kubectl access to your K8s cluster(s) to onboard to essesseff, GitHub, Argo CD and K8s typically in under 5 minutes per essesseff app, or otherwise similarly make use of the [essesseff public API](https://www.essesseff.com/docs/api) for onboarding.  Otherwise, the essesseff UX and shell terminal with kubectl access to your K8s cluster(s), in combination with onboarding scripts in your essesseff app argocd-env repos, may also be used to onboard your essesseff app(s) to essesseff, GitHub, Argo CD and K8s.
+**If an essesseff subscriber**, it is highly recommended that you use the [essesseff onboarding utility](https://www.essesseff.com/docs/deployment/essesseff-onboarding-utility) from a shell terminal with kubectl access to your K8s cluster(s) to onboard to essesseff, GitHub, Argo CD and K8s typically in under 5 minutes per essesseff app, or otherwise similarly make use of the [essesseff public API](https://www.essesseff.com/docs/api) for onboarding.  Otherwise, the essesseff UX and shell terminal with kubectl access to your K8s cluster(s), in combination with onboarding scripts in your essesseff app argocd-env repos, may also be used to onboard your essesseff app(s) to essesseff, GitHub, Argo CD and K8s.
 
-If not an essesseff subscriber, you can still freely use all of the repos in this golden path template, edit app name and namespace labels according to your needs (typically via global string replacements in the file names and contents), and then run the onboarding scripts included in each of your argocd-env repos from a shell terminal with kubectl access to you K8s cluster(s) to get fully onboarded to GitHub, Argo CD and K8s in about ~20 minutes.
+**If not an essesseff subscriber**, you can still freely use all of the repos in this golden path template, edit app name and namespace labels according to your needs (typically via global string replacements in the file names and contents), and then run the onboarding scripts included in each of your argocd-env repos from a shell terminal with kubectl access to you K8s cluster(s) to get fully onboarded to GitHub, Argo CD and K8s in about ~20 minutes.
 
 ## Development Workflow
 
